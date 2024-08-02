@@ -28,3 +28,14 @@ func TestMap(t *testing.T) {
 		t.Errorf("want:%v, but got %v", want, got)
 	}
 }
+
+func TestReduce(t *testing.T) {
+	test := []int{2,3,4,7,8}
+	want := 2+3+4+7+8
+	got := slicetransform.Reduce(test, 0, func(intermed, current int) int {
+		return intermed+current
+	})
+	if want != got {
+		t.Errorf("want:%v, but got %v", want, got)
+	}
+}

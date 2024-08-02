@@ -17,3 +17,11 @@ func Map[T, S any](slc []T, mapping func(T) S) []S {
 	}
 	return newSlc
 }
+
+func Reduce[T, S any](slc []T, identity S, accumulator func(S, T) S) S {
+	result := identity
+	for _, element := range slc {
+		result = accumulator(result, element)
+	}
+	return result
+}
