@@ -25,3 +25,22 @@ func Reduce[T, S any](slc []T, identity S, accumulator func(S, T) S) S {
 	}
 	return result
 }
+
+func Zip[T, S, R any](slc1 []T, default1 T, slc2 []S, default2 S, combiner func(T, S) R) []R {
+	n, m := len(slc1), len(slc2)
+	short, long := min(n, m), max(n, m)
+	newSlc := make([]R, long)
+	for i := 0; i < short; i++ {
+		newSlc[i] = combiner(slc1[i], slc2[i])
+	}
+	if n < m {
+		for i := short; i < long; i++ {
+			newSlc[i] = combiner(default1, slc2[i])
+		}
+	} else {
+		for i := short; i < long; i++ {
+			newSlc[i] = combiner(slc1[i], default2)
+		}
+	}
+	return newSlc
+}
