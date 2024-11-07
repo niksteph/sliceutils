@@ -40,11 +40,11 @@ func TestFold(t *testing.T) {
 	}
 }
 
-func TestZipEqualLength(t *testing.T) {
+func TestZipAllEqualLength(t *testing.T) {
 	test1 := []int{4, 3, 2, 1}
 	test2 := []int{1, 2, 3, 4}
 	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0, 1.0 / 4.0}
-	got := slicetransform.Zip(test1, 0, test2, 1, func(numerator, denominator int) float64 {
+	got := slicetransform.ZipAll(test1, 0, test2, 1, func(numerator, denominator int) float64 {
 		return float64(numerator) / float64(denominator)
 	})
 	if !slices.Equal(want, got) {
@@ -52,11 +52,11 @@ func TestZipEqualLength(t *testing.T) {
 	}
 }
 
-func TestZipShorterFirst(t *testing.T) {
+func TestZipAllShorterFirst(t *testing.T) {
 	test1 := []int{4, 3, 2}
 	test2 := []int{1, 2, 3, 4}
 	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0, 0.0}
-	got := slicetransform.Zip(test1, 0, test2, 1, func(numerator, denominator int) float64 {
+	got := slicetransform.ZipAll(test1, 0, test2, 1, func(numerator, denominator int) float64 {
 		return float64(numerator) / float64(denominator)
 	})
 	if !slices.Equal(want, got) {
@@ -64,11 +64,11 @@ func TestZipShorterFirst(t *testing.T) {
 	}
 }
 
-func TestZipLongerFirst(t *testing.T) {
+func TestZipAllLongerFirst(t *testing.T) {
 	test1 := []int{4, 3, 2, 1}
 	test2 := []int{1, 2, 3}
 	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0, 1.0}
-	got := slicetransform.Zip(test1, 0, test2, 1, func(numerator, denominator int) float64 {
+	got := slicetransform.ZipAll(test1, 0, test2, 1, func(numerator, denominator int) float64 {
 		return float64(numerator) / float64(denominator)
 	})
 	if !slices.Equal(want, got) {
