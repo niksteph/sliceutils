@@ -29,10 +29,10 @@ func TestMap(t *testing.T) {
 	}
 }
 
-func TestReduce(t *testing.T) {
+func TestFold(t *testing.T) {
 	test := []int{2, 3, 4, 7, 8}
 	want := 2 + 3 + 4 + 7 + 8
-	got := slicetransform.Reduce(test, 0, func(intermed, current int) int {
+	got := slicetransform.Fold(test, 0, func(intermed, current int) int {
 		return intermed + current
 	})
 	if want != got {
