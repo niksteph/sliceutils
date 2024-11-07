@@ -54,3 +54,35 @@ func Zip[T, S, R any](slc1 []T, slc2 []S, combiner func(T, S) R) []R {
 	}
 	return newSlc
 }
+
+func BagEqual[T comparable](slc1, slc2 []T) bool {
+	if len(slc1) != len(slc2) {
+		return false
+	}
+	counts := make(map[T]int)
+	for _, e := range slc1 {
+		_, ok := counts[e]
+		if !ok {
+			counts[e] = 0
+		} else {
+			counts[e]++
+		}
+	}
+	for _, e := range slc2 {
+		c, ok := counts[e]
+		if !ok {
+			return false
+		} else if c > 0 {
+			counts[e]--
+		} else if c == 0 {
+			delete(counts, e)
+		}
+	}
+	for _, c := range counts {
+		if c == 0 {
+			panic("Counter with zero should not exist anymore.")
+		}
+		return false
+	}
+	return true
+}

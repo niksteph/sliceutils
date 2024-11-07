@@ -111,3 +111,43 @@ func TestZipLongerFirst(t *testing.T) {
 		t.Errorf("want:%v, but got %v", want, got)
 	}
 }
+
+func TestBagEqualOrdered(t *testing.T) {
+	test1 := []int{1, 2, 3}
+	test2 := []int{1, 2, 3}
+	if !sliceutils.BagEqual(test1, test2) {
+		t.Errorf("%v and %v should be bag-equal", test1, test2)
+	}
+}
+
+func TestBagEqualUnordered(t *testing.T) {
+	test1 := []int{1, 2, 3}
+	test2 := []int{3, 2, 1}
+	if !sliceutils.BagEqual(test1, test2) {
+		t.Errorf("%v and %v should be bag-equal", test1, test2)
+	}
+}
+
+func TestBagEqualDifferentLength(t *testing.T) {
+	test1 := []int{1, 2, 3}
+	test2 := []int{1, 2, 3, 4}
+	if sliceutils.BagEqual(test1, test2) {
+		t.Errorf("%v and %v should not be bag-equal", test1, test2)
+	}
+}
+
+func TestBagEqualDifferentAmounts(t *testing.T) {
+	test1 := []int{1, 2, 3, 3}
+	test2 := []int{1, 2, 2, 3}
+	if sliceutils.BagEqual(test1, test2) {
+		t.Errorf("%v and %v should not be bag-equal", test1, test2)
+	}
+}
+
+func TestBagEqualDifferentAmountsUnordered(t *testing.T) {
+	test1 := []int{3, 2, 3, 1}
+	test2 := []int{1, 3, 2, 2}
+	if sliceutils.BagEqual(test1, test2) {
+		t.Errorf("%v and %v should not be bag-equal", test1, test2)
+	}
+}
