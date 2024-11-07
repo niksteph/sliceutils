@@ -44,3 +44,13 @@ func ZipAll[T, S, R any](slc1 []T, default1 T, slc2 []S, default2 S, combiner fu
 	}
 	return newSlc
 }
+
+func Zip[T, S, R any](slc1 []T, slc2 []S, combiner func(T, S) R) []R {
+	n, m := len(slc1), len(slc2)
+	l := min(n, m)
+	newSlc := make([]R, l)
+	for i := 0; i < l; i++ {
+		newSlc[i] = combiner(slc1[i], slc2[i])
+	}
+	return newSlc
+}

@@ -75,3 +75,39 @@ func TestZipAllLongerFirst(t *testing.T) {
 		t.Errorf("want:%v, but got %v", want, got)
 	}
 }
+
+func TestZipEqualLength(t *testing.T) {
+	test1 := []int{4, 3, 2, 1}
+	test2 := []int{1, 2, 3, 4}
+	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0, 1.0 / 4.0}
+	got := slicetransform.Zip(test1, test2, func(numerator, denominator int) float64 {
+		return float64(numerator) / float64(denominator)
+	})
+	if !slices.Equal(want, got) {
+		t.Errorf("want:%v, but got %v", want, got)
+	}
+}
+
+func TestZipShorterFirst(t *testing.T) {
+	test1 := []int{4, 3, 2}
+	test2 := []int{1, 2, 3, 4}
+	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0}
+	got := slicetransform.Zip(test1, test2, func(numerator, denominator int) float64 {
+		return float64(numerator) / float64(denominator)
+	})
+	if !slices.Equal(want, got) {
+		t.Errorf("want:%v, but got %v", want, got)
+	}
+}
+
+func TestZipLongerFirst(t *testing.T) {
+	test1 := []int{4, 3, 2, 1}
+	test2 := []int{1, 2, 3}
+	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0}
+	got := slicetransform.Zip(test1, test2, func(numerator, denominator int) float64 {
+		return float64(numerator) / float64(denominator)
+	})
+	if !slices.Equal(want, got) {
+		t.Errorf("want:%v, but got %v", want, got)
+	}
+}
