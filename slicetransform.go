@@ -1,4 +1,4 @@
-package slicetransform
+package sliceutils
 
 func Filter[T any](slc []T, predicate func(T) bool) []T {
 	var newSlc []T

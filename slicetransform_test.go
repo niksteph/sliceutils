@@ -1,8 +1,8 @@
-package slicetransform_test
+package sliceutils_test
 
 import (
 	"fmt"
-	"github.com/niksteph/slicetransform"
+	"github.com/niksteph/sliceutils"
 	"slices"
 	"testing"
 )
@@ -10,7 +10,7 @@ import (
 func TestFilter(t *testing.T) {
 	test := []int{2, 3, 4, 7, 8}
 	want := []int{2, 4, 8}
-	got := slicetransform.Filter(test, func(n int) bool {
+	got := sliceutils.Filter(test, func(n int) bool {
 		return n%2 == 0
 	})
 	if !slices.Equal(want, got) {
@@ -21,7 +21,7 @@ func TestFilter(t *testing.T) {
 func TestMap(t *testing.T) {
 	test := []int{2, 3, 4, 7, 8}
 	want := []string{"10", "11", "100", "111", "1000"}
-	got := slicetransform.Map(test, func(n int) string {
+	got := sliceutils.Map(test, func(n int) string {
 		return fmt.Sprintf("%b", n)
 	})
 	if !slices.Equal(want, got) {
@@ -32,7 +32,7 @@ func TestMap(t *testing.T) {
 func TestFold(t *testing.T) {
 	test := []int{2, 3, 4, 7, 8}
 	want := 2 + 3 + 4 + 7 + 8
-	got := slicetransform.Fold(test, 0, func(intermed, current int) int {
+	got := sliceutils.Fold(test, 0, func(intermed, current int) int {
 		return intermed + current
 	})
 	if want != got {
@@ -44,7 +44,7 @@ func TestZipAllEqualLength(t *testing.T) {
 	test1 := []int{4, 3, 2, 1}
 	test2 := []int{1, 2, 3, 4}
 	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0, 1.0 / 4.0}
-	got := slicetransform.ZipAll(test1, 0, test2, 1, func(numerator, denominator int) float64 {
+	got := sliceutils.ZipAll(test1, 0, test2, 1, func(numerator, denominator int) float64 {
 		return float64(numerator) / float64(denominator)
 	})
 	if !slices.Equal(want, got) {
@@ -56,7 +56,7 @@ func TestZipAllShorterFirst(t *testing.T) {
 	test1 := []int{4, 3, 2}
 	test2 := []int{1, 2, 3, 4}
 	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0, 0.0}
-	got := slicetransform.ZipAll(test1, 0, test2, 1, func(numerator, denominator int) float64 {
+	got := sliceutils.ZipAll(test1, 0, test2, 1, func(numerator, denominator int) float64 {
 		return float64(numerator) / float64(denominator)
 	})
 	if !slices.Equal(want, got) {
@@ -68,7 +68,7 @@ func TestZipAllLongerFirst(t *testing.T) {
 	test1 := []int{4, 3, 2, 1}
 	test2 := []int{1, 2, 3}
 	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0, 1.0}
-	got := slicetransform.ZipAll(test1, 0, test2, 1, func(numerator, denominator int) float64 {
+	got := sliceutils.ZipAll(test1, 0, test2, 1, func(numerator, denominator int) float64 {
 		return float64(numerator) / float64(denominator)
 	})
 	if !slices.Equal(want, got) {
@@ -80,7 +80,7 @@ func TestZipEqualLength(t *testing.T) {
 	test1 := []int{4, 3, 2, 1}
 	test2 := []int{1, 2, 3, 4}
 	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0, 1.0 / 4.0}
-	got := slicetransform.Zip(test1, test2, func(numerator, denominator int) float64 {
+	got := sliceutils.Zip(test1, test2, func(numerator, denominator int) float64 {
 		return float64(numerator) / float64(denominator)
 	})
 	if !slices.Equal(want, got) {
@@ -92,7 +92,7 @@ func TestZipShorterFirst(t *testing.T) {
 	test1 := []int{4, 3, 2}
 	test2 := []int{1, 2, 3, 4}
 	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0}
-	got := slicetransform.Zip(test1, test2, func(numerator, denominator int) float64 {
+	got := sliceutils.Zip(test1, test2, func(numerator, denominator int) float64 {
 		return float64(numerator) / float64(denominator)
 	})
 	if !slices.Equal(want, got) {
@@ -104,7 +104,7 @@ func TestZipLongerFirst(t *testing.T) {
 	test1 := []int{4, 3, 2, 1}
 	test2 := []int{1, 2, 3}
 	want := []float64{4.0 / 1.0, 3.0 / 2.0, 2.0 / 3.0}
-	got := slicetransform.Zip(test1, test2, func(numerator, denominator int) float64 {
+	got := sliceutils.Zip(test1, test2, func(numerator, denominator int) float64 {
 		return float64(numerator) / float64(denominator)
 	})
 	if !slices.Equal(want, got) {
